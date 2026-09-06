@@ -64,7 +64,7 @@ print (f"{nota}: {letra}")
 
 # --------------------------------------------------------------------------------------------------
 
-# Ejercicio inetgrador
+# Ejercicio integrador
 
 total_compra = float(input("Cual es el monto total de su compra? "))
 descuento = 0

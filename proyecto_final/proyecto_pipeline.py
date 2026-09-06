@@ -161,6 +161,8 @@ print("")
 df.to_csv("hollywood_limpio.csv", index = False)
 print("-DataFrame limpio guardado en un nuevo archivo csv-")
 print("")
+
+# Hacer diagnostico al dataframe limpio
 df_limpio = pd.read_csv("hollywood_limpio.csv")
 print("Estas son las dimensiones del nuevo dataframe:", df_limpio.shape)
 print("")

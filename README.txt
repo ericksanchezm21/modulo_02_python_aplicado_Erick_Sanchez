@@ -1,3 +1,8 @@
+Descripcion del proyecto:
+
+Este proyecto consiste en la descarga de un dataframe de peliculas y hacerle todo un proceso de limpieza de datos para luego proceder con un 
+analisis del mismo y guardar la nueva version del dataframe en un archivo con formato csv.
+
 Respuestas a preguntas de razonamiento
 
 -----Etapa 1: Cargar y diagnosticar-----
@@ -58,10 +63,32 @@ bajas. Por lo tanto, el tamaño de cada grupo también debe tenerse en cuenta al
 
 P. ¿Por qué guardar el resultado en un archivo nuevo (hollywood_limpio.csv), en vez de sobrescribir el archivo original hollywood.csv que
 descargaste?
-R. Guardar el resultado en un archivo nuevo como hollywood_limpio.csv permite conservar el dataset 
-original sin modificaciones. Esto es importante porque el archivo original funciona como una fuente 
-de respaldo a la que podemos regresar si cometemos algún error durante la limpieza o necesitamos 
-aplicar un procedimiento diferente. Además, mantener separados los datos originales y los procesados 
-facilita la trazabilidad del pipeline, ya que podemos comparar ambos archivos y saber qué 
-transformaciones se realizaron. Si sobrescribiéramos hollywood.csv, perderíamos los datos originales 
-y sería más difícil recuperar información eliminada o modificada accidentalmente.
+R. Guardar el resultado en un archivo nuevo como hollywood_limpio.csv permite conservar el dataset original sin modificaciones. Esto es 
+importante porque el archivo original funciona como una fuente de respaldo a la que podemos regresar si cometemos algún error durante la 
+limpieza o necesitamos aplicar un procedimiento diferente. Además, mantener separados los datos originales y los procesados facilita la 
+trazabilidad del pipeline, ya que podemos comparar ambos archivos y saber qué transformaciones se realizaron. Si sobrescribiéramos 
+hollywood.csv, perderíamos los datos originales y sería más difícil recuperar información eliminada o modificada accidentalmente.
+
+Respuestas a preguntas de la seccion "Escenarios: ¿qué harías si...?"
+
+ESCENARIO 1
+P. Si el dataset tuviera una columna de fechas completas (día, mes y año) en vez de solo el año, ¿qué tendrías que verificar antes de 
+poder ordenar el dataset cronológicamente por esa columna?
+R. Primero tendría que verificar que la columna tenga un formato de fecha consistente y que sus valores sean reconocidos correctamente como 
+fechas, no como texto. También revisaría si existen fechas nulas, inválidas o con formatos diferentes, ya que podrían afectar el ordenamiento 
+cronológico.
+
+ESCENARIO 2
+P. Si quisieras aplicar este mismo pipeline a un dataset completamente distinto (por ejemplo, canciones con su artista, género y número de
+reproducciones), ¿qué partes de tu código cambiarían, y cuáles seguirían exactamente igual?
+R. Cambiarían los datos y las operaciones específicas de cada etapa, como las columnas que se diagnostican, las reglas de limpieza, las nuevas 
+columnas que se crean, los criterios para ordenar y las agrupaciones utilizadas para analizar. Sin embargo, las 6 etapas del pipeline seguirían 
+siendo las mismas: 1) cargar y diagnosticar, 2) limpiar, 3) crear columnas nuevas, 4) tipos de datos y ordenar, 5) agrupar y analizar y 
+6) guardar el resultado.
+
+ESCENARIO 3
+P. Si una columna nueva tuviera 95% de sus valores nulos (mucho peor que Genre, que tenía cerca del 29%), ¿seguirías rellenándola de la misma
+forma? ¿Qué harías distinto, y por qué?
+R. No la rellenaría de la misma forma, porque con un 95% de valores nulos existe muy poca información real para completar la columna de manera 
+confiable. Evaluaría si esa columna es realmente necesaria para el análisis y, si no lo es, consideraría eliminarla, ya que rellenar tantos 
+valores podría introducir información artificial y distorsionar los resultados.

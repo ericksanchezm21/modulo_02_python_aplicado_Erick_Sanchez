@@ -1,20 +1,14 @@
 # Proyecto Final: Pipeline Básico de Procesamiento de Datos
 
 """
-Este proyecto consiste en la descarga de un dataframe de peliculas y hacerle todo un proceso de 
-limpieza de datos para luego proceder con un analisis del mismo y guardar la nueva version del 
-dataframe en un archivo con formato csv.
-
 Antes de proceder con el codigo en python, se debe de correr este comando en la terminal 
 (aplicable para powershell):
 
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/reisanar/datasets/master/HollywoodMovies.csv" -OutFile hollywood.csv
-
 """
 
 # ----- Etapa 0: Importar librerias necesarias para trabajar -----
 
-import numpy as np
 import pandas as pd
 
 # ----- Etapa 1: Cargar y diagnosticar -----
@@ -97,6 +91,11 @@ print("")
 df["Exitosa"] = df["RottenTomatoes"] >= 60
 print("-Creacion de columna Exitosa completada.-")
 print("")
+
+# Hacer conteo de peliculas exitosas y no exitosas (Los valores True son peliculas exitosas y los valores False son las no exitosas)
+print("-Conteo de peliculas exitosas y no exitosas.-")
+print(df["Exitosa"].value_counts())
+print("")
 print("Etapa 3 terminada.")
 print("")
 print("------------------------------------------------------------------------")
@@ -112,7 +111,7 @@ print("")
 
 # Ordenar los registros del dataset por la ganancia de la pelicula (de mayor a menor)
 df = df.sort_values(by = "Ganancia", ascending= False)
-print("Ordenacion del dataframe por la columna Ganancia de forma descendente realizado.")
+print("-Ordenacion del dataframe por la columna Ganancia de forma descendente realizado.-")
 print("")
 
 # Obtener el top 3 de peliculas con mayores ganancias (reflejar nombre de la pelicula y ganancia)
@@ -131,13 +130,23 @@ print("")
 # Calculo de la calificacion promedio de Rotten Tomatoes por cada genero de pelicula (los valores deben de estar redondeados a 1 decimal)
 print("-----Calificacion promedio de Rotten Tomatoes por genero de pelicula-----")
 print("")
-print(round(df.groupby(by = "Genre")["RottenTomatoes"].mean(),1))
+df_agrupado_genero = round(df.groupby(by = "Genre")["RottenTomatoes"].mean(),1)
+print(df_agrupado_genero)
 print("")
 
 # Calculo de la ganancia promedio por estudio (los valores deben de estar redondeados a 1 decimal)
 print("-----Ganancia promedio por estudio-----")
 print("")
-print(round(df.groupby(by = "LeadStudio")["Ganancia"].mean(),1))
+df_agrupado_estudio = round(df.groupby(by = "LeadStudio")["Ganancia"].mean(),1)
+print(df_agrupado_estudio)
+print("")
+
+# Imprimir genero con mayor calificacion
+print("-Este es el genero con mayor calificacion.-")
+print(df_agrupado_genero.sort_values(ascending = False).head(1))
+print("")
+genero_mayor_calificacion = df_agrupado_genero.sort_values(ascending = False).head(1).index[0]
+print("Total de peliculas de ese genero:", len(df[df["Genre"] == genero_mayor_calificacion]))
 print("")
 print("Etapa 5 terminada.")
 print("")
@@ -151,6 +160,14 @@ print("")
 # Guardar el dataframe limpio en un archivo .csv con el nombre hollywood_limpio.csv sin la columna extra de indice
 df.to_csv("hollywood_limpio.csv", index = False)
 print("-DataFrame limpio guardado en un nuevo archivo csv-")
+print("")
+df_limpio = pd.read_csv("hollywood_limpio.csv")
+print("Estas son las dimensiones del nuevo dataframe:", df_limpio.shape)
+print("")
+print("-Aqui esta el dianostico de nulls del nuevo dataframe.-")
+print(df_limpio.isnull().sum())
+print("")
+print("Total de valores nulls presentes:", df_limpio.isnull().sum().sum())
 print("")
 print("Etapa 6 terminada.")
 print("")
